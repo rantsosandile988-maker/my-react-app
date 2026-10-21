@@ -4,6 +4,9 @@ export default function Transactions({ user }) {
   const [books, setBooks] = useState(() => JSON.parse(localStorage.getItem("books")) || []);
   const [transactions, setTransactions] = useState(() => JSON.parse(localStorage.getItem("transactions")) || []);
 
+  const [manualBookId, setManualBookId] = useState("");
+  const [manualType, setManualType] = useState("Borrow");
+
   useEffect(() => {
     localStorage.setItem("books", JSON.stringify(books));
     localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -27,9 +30,35 @@ export default function Transactions({ user }) {
     setTransactions(transactions.filter((t) => t.id !== id));
   };
 
+  const addTransaction = () => {
+    if (!manualBookId) return alert("Book ID required.");
+    setTransactions([...transactions, {
+      id: Date.now(),
+      type: manualType,
+      bookId: parseInt(manualBookId),
+      userId: user.id
+    }]);
+    alert("Transaction added successfully!");
+    setManualBookId("");
+    setManualType("Borrow");
+  };
+
   return (
     <div className="page-content">
       <h2>Transactions</h2>
+
+      {user.role === "admin" && (
+        <div className="admin-form">
+          <h3>Manual Transaction Entry</h3>
+          <input type="text" placeholder="Book ID" value={manualBookId} onChange={(e) => setManualBookId(e.target.value)} />
+          <select value={manualType} onChange={(e) => setManualType(e.target.value)}>
+            <option value="Borrow">Borrow</option>
+            <option value="Return">Return</option>
+          </select>
+          <button onClick={addTransaction}>Add Transaction</button>
+        </div>
+      )}
+
       <table>
         <thead>
           <tr><th>Book</th><th>Available</th><th>Borrow</th><th>Return</th></tr>

@@ -32,6 +32,9 @@ export default function App() {
           {currentUser && <a onClick={() => setView("users")}>Users</a>}
           <a onClick={() => setView("transactions")}>Transactions</a>
           <a onClick={() => setView("management")}>Manage</a>
+          {currentUser && currentUser.role === "admin" && (
+            <a onClick={() => setView("bookmanage")}>Book Management</a>
+          )}
           {!currentUser ? (
             <>
               <button onClick={() => setView("login")}>Login</button>
@@ -102,4 +105,3 @@ export default function App() {
     </div>
   );
 }
-

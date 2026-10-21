@@ -34,16 +34,20 @@ export default function BookManagement({ user }) {
   return (
     <div className="page-content">
       <h2>Book Management</h2>
+
       {user.role === "admin" && (
-        <>
+        <div className="admin-form">
+          <h3>Add or Update Book</h3>
           <input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
           <input placeholder="Author" value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })} />
           <input placeholder="Genre" value={form.genre} onChange={(e) => setForm({ ...form, genre: e.target.value })} />
           <input placeholder="ISBN" value={form.isbn} onChange={(e) => setForm({ ...form, isbn: e.target.value })} />
           <input type="number" placeholder="Quantity" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: parseInt(e.target.value) })} />
           <button onClick={addBook}>Add Book</button>
-        </>
+        </div>
       )}
+
+      {books.length === 0 && <p>No books available. Please add one.</p>}
 
       <ul>
         {books.map((b) => (
@@ -61,3 +65,4 @@ export default function BookManagement({ user }) {
     </div>
   );
 }
+
