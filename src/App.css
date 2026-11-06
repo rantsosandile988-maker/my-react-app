@@ -1,8 +1,12 @@
-
-/* MAIN CONTAINER */
 .app-container {
   font-family: "Segoe UI", Arial, sans-serif;
-  background: url("/Messi.png") no-repeat center center fixed;
+  background:
+    linear-gradient(
+      rgba(255,255,255,0.95),
+      rgba(255,255,255,0.95)
+    ),
+    url("/Messi.png") no-repeat center center fixed;
+
   background-size: cover;
   color: #001838;
   min-height: 100vh;
